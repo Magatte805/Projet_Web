@@ -1,28 +1,18 @@
+// Importer les modules nécessaires
 const express = require('express');
-const indexRouter = require('./Routes/getRechercheVille.js');
-
+const routes = require('./Routes/index.js')
 const app = express();
-const PORT = process.env.PORT || 3000;
 
+
+// Définir les routes
+app.use('/', routes);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('Pages'));
 
-app.get('/API1', (req, res) => {
-    const termeRecherche = req.query.q;
-    if (!termeRecherche) {
-        return res.status(400).send('Le terme de recherche est manquant.');
-    }
-    res.redirect(`/`); 
-});
 
-app.use('/', indexRouter);
-
+// Démarrer le serveur
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Le serveur est démarré sur le port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
-
-
-
-module.exports = app;
-
-//API1 : https://api-adresse.data.gouv.fr/search/?q=${termeRecherche} : API BAN 
