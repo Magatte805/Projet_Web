@@ -9,28 +9,37 @@ router.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../Pages/Acceuil.html'));
 });
 
-// Route pour la recherche de villes avec autocomplétion
+
+// Route pour la recherche de villes 
 router.get('/search', async (req, res) => {
     try {
-        // Récupérer le texte de recherche saisi par l'utilisateur depuis le paramètre de requête "query"
         const { query } = req.query;
-        
-        // Effectuer une requête à l'API de la Base Adresse Nationale (BAN) pour rechercher les villes
         const response = await axios.get(`https://api-adresse.data.gouv.fr/search/?q=${query}&type=municipality`);
+        
+        if (!response.data || !response.data.features || !Array.isArray(response.data.features)) {
+            throw new Error('Invalid response from BAN API');
+        }
 
-        // Récupérer les résultats de la recherche depuis la réponse de l'API
         const cities = response.data.features.map(feature => feature.properties.city);
 
         // Filtrer les villes en fonction de la chaîne de recherche 
-        const filteredCities = cities.filter(city => city.toLowerCase().startsWith(query.toLowerCase()));
+        let filteredCities = [];
+        if (Array.isArray(cities)) {
+            filteredCities = cities.filter(city => city.toLowerCase().startsWith(query.toLowerCase()));
+        }
 
         // Renvoyer les villes filtrées au format JSON à l'interface utilisateur
         res.json(filteredCities);
     } catch (error) {
         console.error('Error searching cities:', error);
-        // Renvoyer une erreur HTTP 500 en cas d'erreur lors de la recherche de villes
-        res.status(500).json({ error: 'Internal Server Error' });
+        if (error.message !== 'Invalid response from BAN API') {
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            res.json([]); 
+        }
     }
-});
+});  
+
+
 
 module.exports = router;

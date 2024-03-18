@@ -16,3 +16,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+
+// API1 :  https://api-adresse.data.gouv.fr/search/
+// API2 : https://api.content.tripadvisor.com/api/v1/location/search : 
