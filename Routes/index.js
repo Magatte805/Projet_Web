@@ -6,7 +6,7 @@ const path = require('path');
 
 // Route pour la page d'accueil
 router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../Pages/Acceuil.html'));
+    res.sendFile(path.join(__dirname, '../public/Acceuil.html'));
 });
 
 

@@ -1,0 +1,97 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+    color: #333;
+    background:radial-gradient(#ff8a65, #a5d6a7,  #ffd54f)
+
+ 
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #37474f;
+    padding: 10px; 
+  }
+  
+  .navbar-title {
+    flex-grow: 1;
+    text-align: center; 
+    font-size: 30px;
+  }
+  
+  .navbar-menu a {
+    margin: 0 10px;
+    color: white; 
+    text-decoration: none; 
+  }
+  
+.welcome-container h1 {
+    font-size: 2.5rem;
+    letter-spacing: 1px; 
+    line-height: 1.5; 
+    color: #007bff; 
+}
+
+.welcome-container p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #666; 
+    flex: 1;
+
+}
+
+.welcome-container button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    background-color: #007bff; 
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.welcome-container button:hover {
+    background-color: #0056b3; 
+}
+
+
+.card-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card {
+    flex: 1;
+    margin-right: 10px; /* Espace entre les cartes */
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+}
+
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.welcome-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.left-image {
+    max-width: 300px;
+    margin-right: 20px;
+}
+
+.text-container {
+    flex: 1;
+}
