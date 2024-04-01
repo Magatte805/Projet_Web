@@ -1,6 +1,7 @@
 window.onload = () => {
     const cityInput = document.getElementById('citySearch');
     const cityResults = document.getElementById('cityResults');
+    let selectedCityElement = null;
 
  // Fonction pour rechercher les restaurants dans une ville donnée à l'aide de l'API Overpass
 async function searchRestaurants(cityName) {
@@ -37,25 +38,26 @@ function displayRestaurants(restaurants) {
 
     limitedRestaurants.forEach(restaurant => {
         const div = document.createElement('div');
+        div.classList.add('Divrestaurant');
 
         // Afficher le nom du restaurant
         const name = document.createElement('p');
-        name.textContent = `Nom du restaurant: ${restaurant.name}`;
+        name.innerHTML= `<b>Nom du restaurant:</b> <i>${restaurant.name}</i>`;
         div.appendChild(name);
 
         // Afficher le type de cuisine
         const cuisine = document.createElement('p');
-        cuisine.textContent = `Type de Cuisine: ${restaurant.cuisine}`;
+        cuisine.innerHTML = `<b>Type de Cuisine:</b> <i>${restaurant.cuisine} </i>`;
         div.appendChild(cuisine);
 
         // Afficher l'adresse du restaurant
         const address = document.createElement('p');
-        address.textContent = `Addresse: ${restaurant.address}`;
+        address.innerHTML = `<b>Addresse:</b> <i> ${restaurant.address} </i>`;
         div.appendChild(address);
 
         // Afficher les heures d'ouverture du restaurant
         const openingHours = document.createElement('p');
-        openingHours.textContent = `Heure d'ouverture: ${restaurant.openingHours}`;
+        openingHours.innerHTML = `<b>Heure d'ouverture:</b> <i>${restaurant.openingHours}</i>`;
         div.appendChild(openingHours);
 
         restaurantsList.appendChild(div);
@@ -63,11 +65,12 @@ function displayRestaurants(restaurants) {
 }
 
 
-
+// Recherche ville 
     cityInput.addEventListener('input', async () => {
         const query = cityInput.value.trim();
         if (query.length === 0) {
             cityResults.innerHTML = '';
+            restaurantsList.innerHTML = '';
             return;
         }
 
@@ -83,6 +86,11 @@ function displayRestaurants(restaurants) {
                     li.style.cursor = 'pointer';
                     li.addEventListener('click', async () => {
                         try {
+                            if (selectedCityElement) {
+                                selectedCityElement.classList.remove('selected-city'); 
+                            }
+                            li.classList.add('selected-city'); 
+                            selectedCityElement = li; 
                             const restaurants = await searchRestaurants(city);
                             displayRestaurants(restaurants);
                             

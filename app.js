@@ -19,5 +19,5 @@ app.listen(PORT, () => {
 });
 
 
-// API1 :  https://api-adresse.data.gouv.fr/search/
-// API2 : https://api.content.tripadvisor.com/api/v1/location/search : 
+// API1 :  https://api-adresse.data.gouv.fr/search/ : recherche ville
+// API2 : https://api.content.tripadvisor.com/api/v1/location/search :  liste restaurant 
