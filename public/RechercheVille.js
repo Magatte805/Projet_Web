@@ -3,26 +3,17 @@ window.onload = () => {
     const cityResults = document.getElementById('cityResults');
     let selectedCityElement = null;
 
- // Fonction pour rechercher les restaurants dans une ville donnée à l'aide de l'API Overpass
-async function searchRestaurants(cityName) {
-    try {
-        const response = await fetch(`https://overpass-api.de/api/interpreter?data=[out:json];area[name="${cityName}"]->.searchArea;(node["amenity"="restaurant"](area.searchArea););out;`);
-        const data = await response.json();
-        const restaurants = data.elements.map(element => ({
-            name: element.tags.name,
-            cuisine: element.tags.cuisine ,
-            address: element.tags['addr:street'] ,
-            postcode: element.tags['addr:postcode'] ,
-            openingHours: element.tags.opening_hours 
-        }));
-
-        return restaurants;
-    } catch (error) {
-        console.error('Error searching restaurants:', error);
-        throw error;
+    // Fonction pour rechercher les restaurants dans une ville donnée à l'aide de l'API Overpass
+    async function searchRestaurants(cityName) {
+        try {
+            const response = await fetch(`/restaurants?cityName=${cityName}`);
+            const restaurants = await response.json();
+            return restaurants;
+        } catch (error) {
+            console.error('Error searching restaurants:', error);
+            throw error;
+        }
     }
-}
-
 
 
 // Fonction pour afficher les restaurants 
@@ -30,11 +21,15 @@ function displayRestaurants(restaurants) {
     const restaurantsList = document.getElementById('restaurantsList');
     restaurantsList.innerHTML = '';
 
-    const filteredRestaurants = restaurants.filter(restaurant =>
-        restaurant.name && restaurant.openingHours && restaurant.cuisine && restaurant.address
-    );
-
-    const limitedRestaurants = filteredRestaurants.slice(0, 20);
+    
+    if (restaurants.length === 0) {
+        const message = document.createElement('p');
+        message.textContent = "Pas de restaurant trouvé";
+        message.classList.add('no-restaurants');
+        restaurantsList.appendChild(message);
+        return;
+    }
+    const limitedRestaurants = restaurants.slice(0, 20);
 
     limitedRestaurants.forEach(restaurant => {
         const div = document.createElement('div');
