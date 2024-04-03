@@ -17,7 +17,7 @@ window.onload = () => {
 
 
 // Fonction pour afficher les restaurants 
-function displayRestaurants(restaurants) {
+async function displayRestaurants(restaurants) {
     const restaurantsList = document.getElementById('restaurantsList');
     restaurantsList.innerHTML = '';
 

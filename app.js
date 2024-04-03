@@ -1,15 +1,19 @@
 // Importer les modules nécessaires
 const express = require('express');
 const path = require('path');
-const routes = require('./Routes/index.js')
+const villeRoute = require('./Routes/ville.js');
+const restaurantRoute = require('./Routes/restaurant.js');
 const app = express();
 
 
 // Définir les routes
-app.use('/', routes);
+app.use('/', villeRoute);
+app.use('/', restaurantRoute);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/test', express.static(path.join(__dirname, 'test')));
+
 
 
 // Démarrer le serveur
@@ -18,6 +22,4 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
-
-// API1 :  https://api-adresse.data.gouv.fr/search/ : recherche ville
-// API2 : https://overpass-api.de/api/interpreter :  liste restaurant 
+ 
