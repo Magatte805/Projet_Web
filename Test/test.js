@@ -8,7 +8,7 @@ const axios = require('axios');
 //test1: Recherche de ville avec succés
 test('Recherche de ville avec succès', async () => {
   const query = 'Paris';
-  const response = await axios.get(`http://localhost:3000/search?query=${query}`);
+  const response = await axios.get(`http://localhost:3001/search?query=${query}`);
   
   // Vérification des résultats
   expect(response.status).toBe(200); 
@@ -19,7 +19,7 @@ test('Recherche de ville avec succès', async () => {
 //test2: Rechercher une ville avec une requête invalide 
 test("Recherche de ville avec une requête invalide", async () => {
     const query = 'InvalidCity';
-    const response = await axios.get(`http://localhost:3000/search?query=${query}`);
+    const response = await axios.get(`http://localhost:3001/search?query=${query}`);
     expect(response.status).toBe(200); 
   
     // Vérifier que la réponse ne contient pas de résultats
@@ -27,10 +27,10 @@ test("Recherche de ville avec une requête invalide", async () => {
   });
   
 
-// Test4: Recherche de ville avec une ville inexistante
+// Test3: Recherche de ville avec une ville inexistante
 test('Recherche de ville avec une ville inexistante', async () => {
   const query = 'VilleInexistante';
-  const response = await axios.get(`http://localhost:3000/search?query=${query}`);
+  const response = await axios.get(`http://localhost:3001/search?query=${query}`);
   
   // Vérification des résultats
   expect(response.status).toBe(200); 
@@ -39,35 +39,19 @@ test('Recherche de ville avec une ville inexistante', async () => {
 
 
 
-
-
-
-
-
-
-
-
 //API 2 : recherche restaurant 
 
-// Test1: Test de réussite de la récupération des restaurants
+// Test de réussite de la récupération des restaurants avec les coordonnées géographiques
 test('Récupération des restaurants avec succès', async () => {
-  const cityName = 'Paris';
-  const response = await axios.get(`http://localhost:3000/restaurants?cityName=${cityName}`);
+  // Coordonnées géographiques de Paris
+  const latitude = 48.8566;
+  const longitude = 2.3522;
+
+  const response = await axios.get(`http://localhost:3001/restaurants?lat=${latitude}&lon=${longitude}`);
   
   // Vérification des résultats
   expect(response.status).toBe(200); 
   expect(response.data).toEqual(expect.arrayContaining([])); 
-});
-
-
-// Test2: Test de récupération des restaurants avec une ville invalide
-test("Récupération des restaurants avec une ville invalide", async () => {
-    const cityName = 'InvalidCity';
-    const response = await axios.get(`http://localhost:3000/restaurants?cityName=${cityName}`);
-    
-    // Vérification des résultats
-    expect(response.status).toBe(200); 
-    expect(response.data).toEqual([]); 
 });
 
 
